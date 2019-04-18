@@ -1,0 +1,35 @@
+﻿@model Dbolilyi.Models.RegisterModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link href="~/css/style.css" rel="stylesheet" />
+
+<h2>Регистрация</h2>
+
+<a asp-action="Login" asp-controller="Account" class="but">Login</a>
+<a asp-action="Index" asp-controller="Home" class="but">Home</a>
+<br /><br />
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly" />
+    <div>
+        <div>
+            <label asp-for="Login">Введите Login</label><br />
+            <input type="text" asp-for="Login" />
+        </div>
+        <div>
+            <label asp-for="Email">Введите Email</label><br />
+            <input type="text" asp-for="Email" />
+        </div>
+        <div>
+            <label asp-for="Password">Введите пароль</label><br />
+            <input asp-for="Password" />
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword">Повторите пароль</label><br />
+            <input asp-for="ConfirmPassword" />
+        </div>
+        @Html.ValidationSummary()
+        <div>
+            <input type="submit" value="Регистрация" />
+        </div>
+    </div>
+</form>

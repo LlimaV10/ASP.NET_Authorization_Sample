@@ -1,0 +1,11 @@
+﻿body {
+    background-color: cyan;
+}
+
+.but {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
