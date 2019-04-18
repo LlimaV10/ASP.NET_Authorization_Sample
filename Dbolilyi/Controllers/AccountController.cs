@@ -26,6 +26,8 @@ namespace Dbolilyi.Controllers
 		{
 			if (User.Identity.IsAuthenticated)
 				return RedirectToAction("Profile", "Account");
+			ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
+			ViewData["LoggedUser"] = User.Identity.Name;
 			return View();
 		}
 		
@@ -47,17 +49,25 @@ namespace Dbolilyi.Controllers
 				}
 				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			}
+			ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
+			ViewData["LoggedUser"] = User.Identity.Name;
 			return View(model);
 		}
 		[HttpGet]
 		public IActionResult Register()
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
+			ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
+			ViewData["LoggedUser"] = User.Identity.Name;
 			return View();
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterModel model)
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
 			if (ModelState.IsValid)
 			{
 				User user = await db.User.FirstOrDefaultAsync(u => u.Login == model.Login);
@@ -76,6 +86,8 @@ namespace Dbolilyi.Controllers
 				else
 					ModelState.AddModelError("", "Пользователь с таким именем уже существует");
 			}
+			ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
+			ViewData["LoggedUser"] = User.Identity.Name;
 			return View(model);
 		}
 		private async Task Authenticate(string userName)
@@ -102,19 +114,14 @@ namespace Dbolilyi.Controllers
 			User user = await db.User.FirstOrDefaultAsync(u => u.Login == User.Identity.Name);
 			if (user != null)
 			{
+				ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
+				ViewData["LoggedUser"] = User.Identity.Name;
 				return View(user);
-				//ViewData["id"] = user.Id;
-				//ViewData["login"] = user.Login;
 			}
 			return RedirectToAction("Logout", "Account");
 		}
 
-		//public IActionResult Index()
-		//{
-		//	return RedirectToAction("Index", "Home");
-		//}
-
-		static string getMd5Hash(string input)
+		static public string getMd5Hash(string input)
 		{ // Create a new instance of the MD5CryptoServiceProvider object.
 			MD5 md5Hasher = MD5.Create(); // Convert the input string to a byte array and compute the hash.
 			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));

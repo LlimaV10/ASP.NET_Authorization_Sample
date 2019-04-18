@@ -26,8 +26,7 @@ namespace Dbolilyi
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
-			//services.AddDistributedMemoryCache();
-			//services.AddSession();
+
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			   .AddCookie(options =>
 				{
@@ -45,26 +44,27 @@ namespace Dbolilyi
 				app.UseDeveloperExceptionPage();
 			}
 
-
 			app.UseAuthentication();
-			//app.UseSession();
+
 			app.UseStaticFiles();
 
+			app.UseStatusCodePagesWithRedirects("/Errors?code={0}");
+
 			app.UseMvc(routes => {
-				//routes.MapRoute(
-				//	"Error",
-				//	 "{*url}",
-				//	 new { controller = "Home", action = "Index" }  // 404s
-				//	);
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}"
 					);
+				//routes.MapRoute(
+				//	"Error",
+				//	 "{*url}",
+				//	 new { controller = "Errors", action = "NotFound" }
+				//	);
 			});
-			app.Run(async (context) =>
-			{
-				await context.Response.WriteAsync("Brrrrr");
-			});
+			//app.Run(async (context) =>
+			//{
+			//	await context.Response.WriteAsync("Brrrrr");
+			//});
 		}
 	}
 }

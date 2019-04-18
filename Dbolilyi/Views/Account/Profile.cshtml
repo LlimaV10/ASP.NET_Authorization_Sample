@@ -1,22 +1,14 @@
 ﻿@model Dbolilyi.Models.User
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{ 
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Profile</title>
-    <link href="~/css/style.css" rel="stylesheet" />
-</head>
-<body>
-    <h1>Profile</h1>
-    <div>
-        <div><span>Id: @Model.Id</span></div>
-        <div><span>Login: @Model.Login</span></div>
-        <div><span>Email: @Model.Email</span></div>
-        <br /><br />
-        <a asp-action="Index" asp-controller="Home" class="but">Home</a>
-        <a asp-action="Logout" asp-controller="Account" class="but">Logout</a>
-    </div>
-</body>
-</html>
-
+<h1>Profile</h1>
+<div>
+    <div><span>Id: @Model.Id</span></div>
+    <div><span>Login: @Model.Login</span></div>
+    <div><span>Email: @Model.Email</span></div>
+</div>

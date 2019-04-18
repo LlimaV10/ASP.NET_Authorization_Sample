@@ -1,33 +1,18 @@
-﻿@model Dbolilyi.Models.User
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout";
+}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>@ViewData["Title"]</title>
-    <link href="~/css/style.css" rel="stylesheet" />
-</head>
-<body>
-    <h1>
-        Main Page
-    </h1>
-    <nav>
-        @if ((bool)ViewData["IsAuthenticated"])
-        {
-            <div><span>You authorized as </span> @ViewData["LoggedUser"] </div>
-            <br />
-            <br />
-            <a asp-action="Profile" asp-controller="Account" class="but">Profile</a>
-            <a asp-action="Logout" asp-controller="Account" class="but">Logout</a>
-        }
-        else
-        {
-            <div>You are not authorized</div>
-            <br />
-            <br />
-            <a asp-action="Login" asp-controller="Account" class="but">Login</a>
-            <a asp-action="Register" asp-controller="Account" class="but">Register</a>
-        }
-    </nav>
-</body>
-</html>
+<h1>Main Page</h1>
+<nav>
+    @if ((bool)ViewData["IsAuthenticated"])
+    {
+        <div><span>You authorized as </span> @ViewData["LoggedUser"] </div>
+    }
+    else
+    {
+        <div>You are not authorized</div>
+    }
+</nav>
 
