@@ -22,8 +22,10 @@
 }
 
 .main_nav a {
+    border-radius: 0;
     color: white;
     padding: 10px;
+    margin: 0;
     padding-bottom: 11px;
     text-decoration: none;
 }
@@ -37,4 +39,29 @@
 .main_block {
     margin: 8px;
     margin-top: 38px;
+}
+
+a {
+    color: white;
+    padding: 10px;
+    padding-bottom: 11px;
+    text-decoration: none;
+    background-color: black;
+    border-radius: 10px;
+}
+
+input[type = submit] {
+    color: black;
+    background-color: lawngreen;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.home {
+    text-align: center;
+}
+
+tr {
+    padding-bottom: 20px;
 }

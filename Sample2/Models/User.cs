@@ -8,6 +8,5 @@ namespace Sample2.Models
 {
 	public class User : IdentityUser
 	{
-		public string Login { get; set; }
 	}
 }

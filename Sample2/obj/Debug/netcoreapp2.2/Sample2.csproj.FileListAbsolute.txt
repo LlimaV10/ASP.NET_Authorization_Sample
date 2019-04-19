@@ -32,3 +32,4 @@ C:\Users\Llima\source\repos\Sample2\Sample2\obj\Debug\netcoreapp2.2\Razor\Views\
 C:\Users\Llima\source\repos\Sample2\Sample2\obj\Debug\netcoreapp2.2\Razor\Views\Error\Index.g.cshtml.cs
 C:\Users\Llima\source\repos\Sample2\Sample2\obj\Debug\netcoreapp2.2\Razor\Views\Account\AccessDenied.g.cshtml.cs
 C:\Users\Llima\source\repos\Sample2\Sample2\obj\Debug\netcoreapp2.2\Razor\Views\Account\Profile.g.cshtml.cs
+C:\Users\Llima\source\repos\Sample2\Sample2\obj\Debug\netcoreapp2.2\Razor\Views\Account\EditPassword.g.cshtml.cs

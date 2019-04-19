@@ -15,7 +15,7 @@
     @foreach (Sample2.Models.User user in Model)
     {
         <tr>
-            <td>@user.Login</td>
+            <td>@user.UserName</td>
             <td>@user.Email</td>
             <td><a asp-controller="Account" asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
         </tr>

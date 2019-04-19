@@ -12,16 +12,28 @@
     <Compile Remove="Migrations\20190418120043_init.Designer.cs" />
     <Compile Remove="Migrations\20190418120303_init2.cs" />
     <Compile Remove="Migrations\20190418120303_init2.Designer.cs" />
+    <Compile Remove="Migrations\20190419054802_Delete Login.cs" />
+    <Compile Remove="Migrations\20190419054802_Delete Login.Designer.cs" />
+    <Compile Remove="Migrations\20190419055440_Delete Login.cs" />
+    <Compile Remove="Migrations\20190419055440_Delete Login.Designer.cs" />
+    <Compile Remove="Migrations\20190419060133_Delete Login.cs" />
+    <Compile Remove="Migrations\20190419060133_Delete Login.Designer.cs" />
+    <Compile Remove="Migrations\20190419060204_Initial.cs" />
+    <Compile Remove="Migrations\20190419060204_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190419060523_Initial.cs" />
+    <Compile Remove="Migrations\20190419060523_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190419061004_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190419061004_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190419062045_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190419062045_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190419062347_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190419062347_InitialMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

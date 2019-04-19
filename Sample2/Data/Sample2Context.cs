@@ -11,9 +11,6 @@ namespace Sample2.Data
 	public class Sample2Context : IdentityDbContext<User>
 	{
 		public Sample2Context(DbContextOptions<Sample2Context> options)
-			: base(options)
-		{
-			Database.EnsureCreated();
-		}
+			: base(options) {}
 	}
 }

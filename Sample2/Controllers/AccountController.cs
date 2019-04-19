@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,8 +10,8 @@ using Sample2.Models;
 
 namespace Sample2.Controllers
 {
-    public class AccountController : Controller
-    {
+	public class AccountController : Controller
+	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
 
@@ -22,14 +23,18 @@ namespace Sample2.Controllers
 		[HttpGet]
 		public IActionResult Register()
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
 			return View();
 		}
 		[HttpPost]
 		public async Task<IActionResult> Register(RegisterModel model)
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
 			if (ModelState.IsValid)
 			{
-				User user = new User { Login = model.Login, Email = model.Email, UserName = model.Email };
+				User user = new User { Email = model.Email, UserName = model.Login };
 				// добавляем пользователя
 				var result = await _userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
@@ -52,6 +57,8 @@ namespace Sample2.Controllers
 		[HttpGet]
 		public IActionResult Login(string returnUrl = null)
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
 			return View(new LoginModel { ReturnUrl = returnUrl });
 		}
 
@@ -59,6 +66,8 @@ namespace Sample2.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginModel model)
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToAction("Profile", "Account");
 			if (ModelState.IsValid)
 			{
 				var result =
@@ -98,7 +107,7 @@ namespace Sample2.Controllers
 		public async Task<IActionResult> Delete(string id)
 		{
 			var user = await _userManager.FindByIdAsync(id);
-			
+
 			if (!await _userManager.IsInRoleAsync(user, "admin") &&
 					!await _userManager.IsInRoleAsync(user, "SuperAdmin"))
 				await _userManager.DeleteAsync(user);
@@ -111,16 +120,71 @@ namespace Sample2.Controllers
 		}
 
 		[Authorize]
+		[HttpGet]
 		public async Task<IActionResult> Profile()
 		{
 			var user = await _userManager.FindByNameAsync(User.Identity.Name);
+			ProfileEditModel model = new ProfileEditModel { UserName = user.UserName, Email = user.Email };
 			if (user != null)
-			{
-				ViewData["IsAuthenticated"] = User.Identity.IsAuthenticated;
-				ViewData["LoggedUser"] = User.Identity.Name;
-				return View(user);
-			}
+				return View(model);
 			return RedirectToAction("Logout", "Account");
+		}
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> Profile(ProfileEditModel model)
+		{
+			var user = await _userManager.FindByNameAsync(User.Identity.Name);
+			if (user == null)
+				return RedirectToAction("Logout", "Account");
+			if (ModelState.IsValid)
+			{
+				user.UserName = model.UserName;
+				user.Email = model.Email;
+				var result = await _userManager.UpdateAsync(user);
+				if (result.Succeeded)
+				{
+					Claim claim = ((ClaimsIdentity)User.Identity).FindFirst("IsPersistent");
+					bool IsPersistent = claim != null ? Convert.ToBoolean(claim.Value) : false;
+					await _signInManager.SignOutAsync();
+					await _signInManager.SignInAsync(user, IsPersistent);
+					return RedirectToAction("Profile", "Account");
+				}
+				else
+				{
+					foreach (var error in result.Errors)
+					{
+						ModelState.AddModelError(string.Empty, error.Description);
+					}
+				}
+			}
+			return View(model);
+		}
+		[Authorize]
+		[HttpGet]
+		public IActionResult EditPassword()
+		{
+			return View();
+		}
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> EditPassword(PasswordEditModel model)
+		{
+			if (!ModelState.IsValid)
+				return View(model);
+			var user = await _userManager.FindByNameAsync(User.Identity.Name);
+			if (user == null)
+				return RedirectToAction("Logout", "Account");
+			var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
+			if (result.Succeeded)
+				return RedirectToAction("Index", "Home");
+			else
+			{
+				foreach (var error in result.Errors)
+				{
+					ModelState.AddModelError(string.Empty, error.Description);
+				}
+			}
+			return View(model);
 		}
 	}
 }
